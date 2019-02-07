@@ -8,7 +8,8 @@ class Enemy {
 public://Accesible from anywhere manytimes within the scope
 
 	//CONTSTRUCTOR runs whenever the new object created
-	Enemy(string n, int hp, int s, int a) : age(a) { // : age(a) is a member initializer for constant variable (and normal variables)
+	Enemy(string n, int hp, int s, int a) : age(a) {
+ // : age(a) is a member initializer for constant variable (and normal variables)
 		cout << "I am your ENEMY!." << endl;
 		//setStats("Skeleton", 250, 12);
 		setStats(n, hp, s);
@@ -27,6 +28,13 @@ public://Accesible from anywhere manytimes within the scope
 		cout << "Age: " << age << endl;
 	}
 
+	//this (a pointer to the object)
+	void printInfoWithThis() {
+		cout << health << endl;
+		cout << this->health << endl;
+		cout << (*this).health << endl;
+	}
+
 	//ATTRIBUTES
 private: //Only accesible from within the class 
 	string name;
@@ -34,8 +42,22 @@ private: //Only accesible from within the class
 	int strength;
 	const int age; //Constant Variable
 
-
 	friend void changeHP(Enemy &obj, int hp);//friend function declare
+};
+
+//OPERATOR OVERLOADING
+//In this example we can add different types of variables with just adding the objects 
+class operatorOverloading {
+public:
+	int var;
+	operatorOverloading() {};
+	operatorOverloading(int a) : var(a) {};
+
+	operatorOverloading operator + (operatorOverloading &obj) {
+		operatorOverloading res;
+		res.var = this->var + obj.var;
+		return res;
+	}
 };
 
 //FRIEND FUNCTION (to change the private members of a class)
@@ -55,6 +77,7 @@ int main() {
 
 	Enemy fireWarrior("Fire Warrior", 999, 35, 28);
 	fireWarrior.getStats();
+	fireWarrior.printInfoWithThis(); 
 	
 	// Accessing an object's members
 	MyClass obj; //Object //use (.)
@@ -73,6 +96,11 @@ int main() {
 	Birthday myBirthday(1, 9, 1991);
 	Person Hasan("Hasan", myBirthday);
 	Hasan.printInfo();
+
+	//OPERATOR OVERLOADING
+	operatorOverloading obj1(12), obj2(55), obj3(123), exampleObject;
+	operatorOverloading abc = obj1 + obj2 + obj3;
+	cout << abc.var << endl;
 
 	return 0;
 }
