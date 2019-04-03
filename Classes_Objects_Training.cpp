@@ -40,6 +40,8 @@ public:
 		cout << (*this).health << endl;
 	}
 
+	void helloEnemy();
+
 	//ATTRIBUTES
 private: 
 	string name;
@@ -49,6 +51,12 @@ private:
 
 	friend void changeHP(Enemy &obj, int hp);//friend function declare
 };
+
+//Class function outside of class 
+void Enemy::helloEnemy() {
+	cout << "hello I'm Hereeee!!!!!!" << endl;
+}
+
 
 //FRIEND FUNCTION (to change the private members of a class)
 void changeHP(Enemy &obj, int hp)
@@ -149,7 +157,7 @@ public:
 
 
 //FUNCTION TEMPLATES
-//One version of function to work with parameters of any type
+//One version of function to work with any type of parameter
 template <class T>
 T sum(T a , T b) {
 	return a + b;
@@ -170,8 +178,33 @@ class Pair {
 private:
 		T first, second;
 public: 
-		Pair(T a, T b) : first(a), second(b) {}
+		Pair(T a, T b) : first(a), second(b) {
+			cout << "These are not char!" << endl;
+		}
+		T bigger();
+		void hello();
 };
+
+//Template Specialization (To specify different behavior for the data type char)
+template <>
+class Pair <char> {
+private: 
+	char x, y;
+public:
+	Pair(char x, char y) {
+		cout << "These are char. First is " << x << " second is " << y << endl;
+	}
+};
+
+template <class T>
+T Pair <T> ::bigger() {
+	return (first > second ? first : second);
+}
+
+template <class T>
+void Pair <T>::hello() {
+	cout << "hello" << endl;
+}
 
 
 
@@ -186,6 +219,7 @@ int main() {
 	Enemy fireWarrior("Fire Warrior", 999, 35, 28);
 	fireWarrior.getStats();
 	fireWarrior.printInfoWithThis(); 
+	fireWarrior.helloEnemy();
 	
 	// ACCESSING an object's members
 	MyClass obj; //Object //use (.)
@@ -229,13 +263,17 @@ int main() {
 	c1->attack();
 	c2->attack();
 
-	////FUNCTION TEMPLATE
+	//FUNCTION TEMPLATE
 	float a = 1.323;
 	float b = 5.8585;
 	cout << sum(a, b) << endl;
 	cout << printT(b) << endl;
 	cout << smaller(b, 1) << endl;
 
-
+	//CLASS TEMPLATE
+	Pair <int> classTempObj(25, 16);
+	cout << classTempObj.bigger() << endl;
+	classTempObj.hello();
+	Pair <char> charClassTempObj('a' , '%');
 	return 0;
 }
