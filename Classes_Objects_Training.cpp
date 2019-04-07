@@ -115,6 +115,7 @@ public:
 	}
 protected: 
 	string eyeColour = "blue";
+	int age;
 };
 //Public Inheritance: Public members of the base class become public, protected become protected
 //Protected Inheritance: Public and protected members of the base class become protected 
@@ -136,6 +137,8 @@ public:
 	{
 		cout << "My eyes are " << eyeColour << endl;
 	}
+
+	
 };
 
 
@@ -275,5 +278,49 @@ int main() {
 	cout << classTempObj.bigger() << endl;
 	classTempObj.hello();
 	Pair <char> charClassTempObj('a' , '%');
-	return 0;
+
+	//EXCEPTIONS (Try - Catch)
+	try {
+		int num1;
+		int num2;
+		cout << "Enter your first number " << endl;
+		cin >> num1;
+		cout << "Enter your second number " << endl;
+		cin >> num2;
+		if (num2 == 0)
+			throw 0;
+		cout << "Number 1 / Number 2 = " << num1 / num2 << endl;
+	}
+	catch (int x) { // catch (...){} to catch every kind of exception
+		cout << "Error" << endl;
+	}
+
+	//WORKING WITH FILES
+
+	//Opening a File
+	/*
+		ios::app	(append to end of file)
+		ios::ate	(go to end of file on opening)
+		ios::binary (file openng in binary mode)
+		ios::in		(open file for reading only)
+		ios::out	(open fle for writing only)
+		ios::trunc	(delete the contents of the file if it exists)
+	*/
+	ofstream myFile("C:\\Users\\hasan\\OneDrive\\Desktop\\Immortal Dragon Invoices\\test.txt", ios::out | ios::trunc);
+	if (myFile.is_open())//check if file is open
+		myFile << "Some Text for Test \n";
+	else
+		cout << "Error, file is not open";
+	myFile.close();
+
+	//Reading from a file
+	string line;
+	ifstream readFile("C:\\Users\\hasan\\OneDrive\\Desktop\\Digital Marketing\\readingTest.txt");
+	while (getline(readFile, line))
+	{
+		cout << line << '\n';
+	}
+	readFile.close();
+
+
 }
